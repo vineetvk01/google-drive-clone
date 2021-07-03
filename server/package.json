@@ -1,0 +1,43 @@
+{
+  "name": "ca-server",
+  "version": "0.0.0",
+  "description": "Backend for DBDesignTool platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start-prod": "yarn run build && node dist/www.js",
+    "build": "babel src/ -d dist",
+    "start": "nodemon --exec babel-node src/www.js"
+  },
+  "author": "Vineet Srivastav",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "camelcase-keys": "^6.2.2",
+    "cors": "^2.8.5",
+    "cuid": "^2.1.8",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "log4js": "^6.1.2",
+    "mongodb": "^3.5.7",
+    "mongoose": "^5.13.1",
+    "path": "^0.12.7",
+    "sanitize-html": "^1.23.0",
+    "socket.io": "^2.3.0",
+    "validator": "^12.2.0"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.0.0-rc.1",
+    "nodemon": "^2.0.2"
+  },
+  "nodemonConfig": {
+    "execMap": {
+      "ts": "yarn build"
+    }
+  }
+}
