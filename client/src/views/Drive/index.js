@@ -189,7 +189,7 @@ const DriveContainer = () => {
         autoDismiss: true,
       })
       fetchAllTheFiles(currentParent.id);
-      setModalVisible(false);
+      setModalVisible({ show: false, type: 'create' });
     }
   }
 
@@ -201,7 +201,7 @@ const DriveContainer = () => {
         autoDismiss: true,
       })
       fetchAllTheFiles(currentParent.id);
-      setModalVisible(false);
+      setModalVisible({ show: false, type: 'edit' });
     }
   }
 
@@ -240,7 +240,7 @@ const DriveContainer = () => {
       </div>
       <Modal 
         visible={modalVisible}
-        closeModal={() => setModalVisible(false)}
+        closeModal={() => setModalVisible({ ...modalVisible, show: false  })}
         parent={currentParent}
         createFile={handleCreate}
         renameFile={handleRename}
