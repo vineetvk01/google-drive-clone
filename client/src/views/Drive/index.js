@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoArrowBackCircle } from 'react-icons/io5';
 import { IoIosClose } from 'react-icons/io';
 import folderImage from '../../assets/folder.png';
@@ -7,7 +7,10 @@ import addNewButton from '../../assets/add_new_button.png';
 import styles from './drive.module.less';
 
 const DriveContainer = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [ directory, setDirectory ] = useState(['root', '100']);
+  const lastIndex = directory.length - 1;
+  const currentParentId = directory[lastIndex];
 
   const files = [
     {
@@ -44,7 +47,6 @@ const DriveContainer = () => {
   }
 
   const renderFilesAndFolder = () => {
-    const lastIndex = directory.length - 1;
     return (
       <div className={styles.container}>
         {
@@ -58,7 +60,7 @@ const DriveContainer = () => {
           })
         }
         <div className={styles.addNew}>
-          <img src={addNewButton} alt="Add New" />
+          <img src={addNewButton} alt="Add New" onClick={() => setModalVisible(true)} />
         </div>
       </div>
     )
@@ -81,31 +83,63 @@ const DriveContainer = () => {
       <div className={styles.filesAndFolder}>
         {renderFilesAndFolder()}
       </div>
-      <Modal />
+      <Modal 
+        visible={modalVisible}
+        closeModal={() => setModalVisible(false)}
+        parentId={currentParentId}
+      />
     </div>
   )
 };
 
 export default React.memo(DriveContainer);
 
-const Modal = () => {
+const Modal = ({visible = false, closeModal, parentId }) => {
+  const [fileName, setFileName] = useState('');
+  const [fileType, setFileType] = useState('folder');
+
+  const [render, setRender] = useState({ 
+    visibility: 'hidden', 
+    opacity: 0
+  });
+
+  useEffect(() => {
+    if(visible) {
+      setTimeout(() => {
+        setRender({ 
+          visibility: 'visible', 
+          opacity: 1
+        });
+      }, 300);
+    } else {
+      setRender({ 
+        visibility: 'hidden', 
+        opacity: 0
+      });
+    }
+  }, [visible]);
+
+  const handleCreate = () => {
+    console.log(fileName, fileType, parentId);
+  }
+
   return (
-    <div className={styles.modalContainer}>
+    <div className={styles.modalContainer} style={render}>
       <div className={styles.modal}>
-        <IoIosClose className={styles.cross} />
+        <IoIosClose className={styles.cross} onClick={closeModal} />
         <h5 className={styles.title}>Create New</h5>
         <div className={styles.radioWrapper}>
-          <input type="radio" name="fileType" id={styles.option1} checked />
-          <label for={styles.option1} className={`${styles.option} ${styles.option1}`}>
+          <input type="radio" name="fileType" id={styles.option1} checked={fileType === 'folder'} onChange={console.log} />
+          <label htmlFor={styles.option1} className={`${styles.option} ${styles.option1}`} onClick={() => setFileType('folder')}>
             <span>Folder</span>
           </label>
-          <input type="radio" name="fileType" id={styles.option2} />
-          <label for={styles.option2} className={`${styles.option} ${styles.option2}`}>
+          <input type="radio" name="fileType" id={styles.option2} checked={fileType === 'file'} onChange={console.log} />
+          <label htmlFor={styles.option2} className={`${styles.option} ${styles.option2}`} onClick={() => setFileType('file')}>
             <span>File</span>
           </label> 
         </div>
-        <input className={styles.fileName} />
-        <button className={styles.submit}>Create</button>
+        <input className={styles.fileName} onChange={(e) => setFileName(e.target.value)} value={fileName} placeholder="Enter File/Folder Name" />
+        <button className={styles.submit} onClick={handleCreate} disabled={fileName.length === 0}>Create</button>
       </div>
     </div>
   )
