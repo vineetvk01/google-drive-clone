@@ -1,9 +1,23 @@
 import { Router } from 'express';
 import _ from 'lodash';
-import { getFilesByUser, createFileByUser, deleteFileByUser, updateFileByUser } from '../services/files';
+import { getFilesByUser, createFileByUser, deleteFileByUser, updateFileByUser, searchFileByUser } from '../services/files';
 import { authRequired } from '../middleware/authentication';
 
 const router = Router();
+
+router.post('/files/search', authRequired(), async (req, res, next) => {
+  try {
+    const { user } = req;
+    const { searchText } = req.body;
+
+    const files = await searchFileByUser(searchText, user);
+
+    res.publish(true, `Result for text: ${searchText}`, { files });
+  } catch (err) {
+    logger.error({ level: 'error', message: err.message || err.toString() });
+    next(err);
+  }
+});
 
 router.get('/files/:parentId', authRequired(), async (req, res, next) => {
   try {

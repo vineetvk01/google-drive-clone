@@ -45,8 +45,6 @@ export const deleteFileByUser = async (parentId = 'root', childId,  user) => {
 
   // TODO: Validate file name
 
-  console.log('\n\n\n',parentId, childId);
-
   await FileSystem.findOneAndDelete({
     childId: childId,
     parentId: parentId,
@@ -54,5 +52,16 @@ export const deleteFileByUser = async (parentId = 'root', childId,  user) => {
   });
 
   return true;
+}
+
+export const searchFileByUser = async (searchText,  user) => {
+
+  // TODO: Validate file name
+
+  let files = await FileSystem.find({ displayName:  { $regex: '.*' + searchText + '.*' }, ownerId: user.username });
+  if(!Array.isArray(files)){
+    files = [files];
+  }
+  return files;
 }
 

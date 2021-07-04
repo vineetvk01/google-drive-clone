@@ -3,12 +3,13 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import useOutside from "../../customHooks/clickOutside";
 import { IoArrowBackCircle } from 'react-icons/io5';
 import { IoIosClose } from 'react-icons/io';
-import { useToasts } from 'react-toast-notifications'
+import { useToasts } from 'react-toast-notifications';
+import { AiOutlineSearch } from 'react-icons/ai';
 import folderImage from '../../assets/folder.png';
 import fileImage from '../../assets/file.png';
 import addNewButton from '../../assets/add_new_button.png';
 import styles from './drive.module.less';
-import { fetchFiles, createFile, deleteFile, renameFile } from './requests';
+import { fetchFiles, createFile, deleteFile, renameFile, searchFiles } from './requests';
 
 const nameTrimmer = (value, length = 11) => {
   return _.truncate(
@@ -22,6 +23,7 @@ const nameTrimmer = (value, length = 11) => {
 const DriveContainer = () => {
   const [modalVisible, setModalVisible] = useState({ show: false });
   const [contextVisible, setContextVisible] = useState({visible: false});
+  const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(true);
   const [allFiles, setAllFiles] = useState([]);
   const [ directory, setDirectory ] = useState([{
@@ -30,7 +32,8 @@ const DriveContainer = () => {
   }]);
   const lastIndex = directory.length - 1;
   const currentParent = directory[lastIndex];
-  const { addToast } = useToasts()
+  const { addToast } = useToasts();
+  const isSearchActive = searchText.length > 0;
 
   const fetchAllTheFiles = useCallback(async (currentParentId) => {
     setLoading(true);
@@ -57,6 +60,27 @@ const DriveContainer = () => {
     })
   }, []);
 
+  const handleSearch = async(value) => {
+    if(value === ''){
+      fetchAllTheFiles(currentParent.id);
+      return;
+    }
+    const response = await searchFiles(value);
+    if(response.data.success){
+      const searchedFiles = _.get(response, 'data.data.files', []);
+      setAllFiles(searchedFiles);
+    }
+  }
+
+  const debouncedSearch = useCallback(
+    _.debounce(handleSearch, 400),
+    []
+  );
+
+  useEffect(() => {
+    debouncedSearch(searchText);
+  }, [debouncedSearch, searchText])
+
   useEffect(() => {
     fetchAllTheFiles(currentParent.id);
   }, [currentParent.id, fetchAllTheFiles])
@@ -69,6 +93,7 @@ const DriveContainer = () => {
 
   const handleBack = (index) => {
     if(directory.length === 1) return;
+    if(isSearchActive) return;
 
     let directoryClone = _.clone(directory);
     console.log('DD', directoryClone);
@@ -148,9 +173,10 @@ const DriveContainer = () => {
             
           })
         }
-        <div className={styles.addNew}>
+        {!isSearchActive && <div className={styles.addNew}>
           <img src={addNewButton} alt="Add New" onClick={() => setModalVisible({ type: 'create', show: true })} />
         </div>
+        }
       </div>
     )
   }
@@ -187,6 +213,13 @@ const DriveContainer = () => {
     )
   }
 
+  const renderSearchDetails = () => {
+    return (
+      <div className={styles.searchResult}>
+        <span>Found Results:</span> {allFiles.length} Items
+      </div>
+    )
+  }
 
   return (
     <div className={styles.driveContainer}>
@@ -195,10 +228,11 @@ const DriveContainer = () => {
           <IoArrowBackCircle onClick={handleBack} className={lastIndex > 0 ? styles.activeNav : styles.disabledNav} />
         </div>
         <div className={styles.breadcrumbs}>
-          {renderDirectory()}
+          {isSearchActive ? renderSearchDetails() : renderDirectory()}
         </div>
-        <div className={styles.search}>
-          <input placeholder="Search files and folders" />
+        <div className={styles.searchBox}>
+          <span className={styles.prefix}><AiOutlineSearch /></span>
+          <input placeholder="Search files and folders" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
         </div>
       </div>
       <div className={styles.filesAndFolder}>

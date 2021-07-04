@@ -6,6 +6,10 @@ export const fetchFiles = (parentId = 'root') => {
   return apiRequest.get(`${URLS.FILES}/${parentId}`);
 }
 
+export const searchFiles = (searchText = '') => {
+  return apiRequest.post(`${URLS.FILES}/search`, { searchText });
+}
+
 export const createFile = (fileName, type, parentId) => {
   return apiRequest.post(`${URLS.FILES}/${parentId}`, {
     type,

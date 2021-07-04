@@ -32,6 +32,13 @@
     & > .breadcrumbs {
       color: #c3c3c3;
 
+      .searchResult {
+        span {
+          color: #616161;
+          font-weight: 600;
+        }
+      }
+
       .pathName {
         display: inline;
 
@@ -50,13 +57,37 @@
         }
       }
     }
-    & > .search {
-      width: 300px;
-      background-color: green;
-      margin-left: auto;
 
-      input {
-        width: 100%;
+    .searchBox{
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      min-width: 350px;
+      max-width: 400px;
+      background: #fff;
+      border: 1px solid #dadada;
+      border-radius: 4px;
+      padding-left: 0.5rem;
+      overflow: hidden;
+      font-family: sans-serif;
+
+      & > .prefix {
+        font-weight: 300;
+        font-size: 14px;
+        color: #999;
+      }
+
+      & > input {
+        flex-grow: 1;
+        font-size: 14px;
+        background: #fff;
+        border: none;
+        outline: none;
+        padding: 0.5rem;
+      }
+
+      &:focus-within {
+        border-color: #777;
       }
     }
   }
