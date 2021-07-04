@@ -19,19 +19,34 @@
       font-size: 24px;
       color: #555B63;
       margin-top: -4px;
-      i {
-        
+      .activeNav {
+        cursor: pointer;
       }
+
+      .disabledNav {
+        color: #a3a3a3;
+        cursor: not-allowed;
+      }
+
     }
     & > .breadcrumbs {
       color: #c3c3c3;
 
-      span {
+      .pathName {
+        display: inline;
 
-        &.active {
-          color: #384248;
-          font-size: 16px;
-          font-weight: 700;
+        &:hover {
+          color: #616161;
+          cursor: pointer;
+        }
+
+        span {
+
+          &.active {
+            color: #384248;
+            font-size: 16px;
+            font-weight: 700;
+          }
         }
       }
     }
@@ -52,10 +67,32 @@
       display: flex;
       flex-wrap: wrap;
 
-      .files {
+      .folder {
         border-radius: 4px;
         padding: 20px 20px 0px 20px;
         margin: 4px 12px;
+
+        .name {
+          margin-top: 8px;
+          font-size: 12px;
+          text-align: center;
+          color: #828589;
+        }
+
+        &:hover {
+          background-color: #E6F5FF;
+        }
+      }
+
+      .file {
+        border-radius: 4px;
+        padding: 20px 20px 0px 20px;
+        margin: 4px 12px;
+        margin-top: -10px;
+
+        img {
+          height: 60px;
+        }
 
         .name {
           margin-top: 8px;
@@ -200,6 +237,27 @@
         background-color: #5AB4FB;
         color: #fff;
       }
+    }
+  }
+}
+
+.contextMenu {
+  position: absolute;
+  background-color: #fff;
+  color: #828589;
+  border: 1px solid #d3d3d3;
+  box-shadow: 5px 5px 15px #d3d3d3;
+  border-radius: 4px;
+  width: 150px;
+
+  p {
+    padding: 8px 20px;
+    margin-bottom: 0px;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #f3f3f3;
+      cursor: pointer;
     }
   }
 }
