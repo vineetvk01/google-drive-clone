@@ -252,7 +252,7 @@ const DriveContainer = () => {
       </div>
       <Modal 
         visible={modalVisible}
-        closeModal={() => setModalVisible({ ...modalVisible, show: false  })}
+        closeModal={() => setModalVisible({ show: false  })}
         parent={currentParent}
         createFile={handleCreate}
         renameFile={handleRename}
@@ -298,10 +298,8 @@ const Modal = ({visible = { show: false }, closeModal, parent, createFile, renam
   const handleSubmit = () => {
     if(type === 'create'){
       createFile(fileName, fileType, parent.id);
-      setFileName('')
     } else {
       renameFile(fileName, parent.id, child.id );
-      setFileName('')
     }
   }
 
