@@ -1,11 +1,12 @@
 import React from 'react';
-// import styles from './style.module.less';
+import spinImage from '../../assets/spin.svg';
+import styles from './styles.module.less';
 
 const Fallback = () => {
 
   return (
-    <div>
-      Loading...
+    <div className={styles.loadingContainer}>
+      <img src={spinImage} alt="loading" width="80px"/>
     </div>
   )
 }

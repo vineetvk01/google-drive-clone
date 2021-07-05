@@ -12,6 +12,7 @@ import addNewButton from '../../assets/add_new_button.png';
 import styles from './drive.module.less';
 import { fetchFiles, createFile, deleteFile, renameFile, searchFiles, logoutUser } from './requests';
 import { useDispatch } from 'react-redux';
+import Fallback from '../../containers/App/Fallback';
 
 const nameTrimmer = (value, length = 11) => {
   return _.truncate(
@@ -210,9 +211,7 @@ const DriveContainer = () => {
 
   const renderLoader = () => {
     return (
-      <div>
-        Loading...
-      </div>
+      <Fallback />
     )
   }
 
