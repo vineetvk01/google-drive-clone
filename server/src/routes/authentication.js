@@ -33,7 +33,7 @@ router.post('/login', async (req, res, next) => {
       {
         maxAge: COOKIE_AGE_ONE_DAY,
         httpOnly: true,
-        secure: false,
+        secure: config.ENV === 'production',
         sameSite: config.ENV === 'production' ? 'none': 'lax',
       }
     );
