@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MONGO_URL = 'mongodb+srv://admin:admin@cluster0.dtsta.mongodb.net/drive';
+const MONGO_URL = process.env.MONGO_URL;
 
 console.log('[INFO] MONGODB URL:=>', MONGO_URL);
 
