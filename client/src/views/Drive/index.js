@@ -308,6 +308,7 @@ const Modal = ({visible = { show: false }, closeModal, parent, createFile, renam
   const handleSubmit = () => {
     if(type === 'create'){
       createFile(fileName, fileType, parent.id);
+      setTimeout(()=> setFileName(''), 800)
     } else {
       renameFile(fileName, parent.id, child.id );
     }

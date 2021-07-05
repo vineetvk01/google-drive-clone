@@ -41,9 +41,34 @@ export const updateFileByUser = async (fileName, parentId = 'root', childId,  us
   return true;
 }
 
-export const deleteFileByUser = async (parentId = 'root', childId,  user) => {
+const fetchObjectIdOfChildren = async (parentId, user, objIds) => {
+  let children = await FileSystem.find({ parentId, ownerId: user.username });
 
-  // TODO: Validate file name
+  if(!children){
+    return;
+  }
+
+  if(!Array.isArray(children)){
+    children = [children];
+  }
+
+  for(let i=0; i< children.length; i++){
+    const child = children[i];
+    objIds.push(child._id);
+    if(child.type === 'folder'){
+      await fetchObjectIdOfChildren(child.childId, user, objIds);
+    }
+  }
+}
+
+const handleAsyncChildDelete = async (parentId, user) => {
+  const objIds = [];
+  await fetchObjectIdOfChildren(parentId, user, objIds);
+  return objIds;
+}
+
+
+export const deleteFileByUser = async (parentId = 'root', childId,  user) => {
 
   await FileSystem.findOneAndDelete({
     childId: childId,
@@ -51,6 +76,9 @@ export const deleteFileByUser = async (parentId = 'root', childId,  user) => {
     ownerId: user.username
   });
 
+  const objectIds = await handleAsyncChildDelete(childId, user);
+  console.log('Going to delete files Ids', objectIds);
+  await FileSystem.deleteMany({ _id: { $in : objectIds }});
   return true;
 }
 
