@@ -4,11 +4,12 @@ import bodyParser from 'body-parser';
 import { fetchAuthentication } from './middleware/authentication'; 
 import drive from './routes/drive';
 import authentication from './routes/authentication';
+import config from './config';
 
 const app = express();
 
 var corsOptions = {
-  origin: ['http://localhost:3000', process.env.CLIENT],
+  origin: ['http://localhost:3000', config.CLIENT],
   optionsSuccessStatus: 200
 }
 
