@@ -1,16 +1,18 @@
-# chat-app
+# drive-app
 
-A chat-application to chat with all the users on the application. :)
+The Drive app mimic the behavior of a standard file system. These files are not real.
 
 ## Demo
 
-### sending message
+### Register and Login
+![master](demo/demo1.gif)
+### Create File and Folder
 ![master](demo/demo1.gif)
 
-### Login
+### Rename File
 ![master](demo/login_vchat.gif)
 
-### Signup
+### Delete
 ![master](demo/signup_vchat.gif)
 
 
@@ -22,8 +24,7 @@ REACT_APP_SERVER_URL=http://localhost:4000
 
 server/
 
-MONGODB_URL=mongodb://localhost:27017/
-DATABASE_NAME=chatapp
+CLIENT=https://yourclient.com
+ENV=production
+MONGO_URL=mongodb+srv://admin:<password>@cluster0.dtsta.mongodb.net/drive
 
-CLIENT=http://localhost:3000
-JWT_KEY=anything_you_like

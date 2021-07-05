@@ -65,10 +65,10 @@ router.post('/logout', authRequired(), async (req, res, next) => {
       JWT_COOKIE_NAME,
       '',
       {
-        maxAge: 10,
+        maxAge: COOKIE_AGE_ONE_DAY,
         httpOnly: true,
-        secure: false,
-        sameSite: 'lax'
+        secure: config.ENV === 'production',
+        sameSite: config.ENV === 'production' ? 'none': 'lax',
       }
     );
     res.publish(true, 'Logged Out Successfully');
