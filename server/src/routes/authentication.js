@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import _ from 'lodash';
 import { createUser, loginRequest } from '../services/users';
-import { config } from '../config';
+import config from '../config';
 import { signJWTData, JWT_COOKIE_NAME, authRequired } from '../middleware/authentication';
 
 const COOKIE_AGE_ONE_DAY = 60 * 60 * 24 * 1000;
