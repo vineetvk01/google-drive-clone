@@ -1,5 +1,4 @@
 import express from 'express';
-import path from 'path';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { fetchAuthentication } from './middleware/authentication'; 

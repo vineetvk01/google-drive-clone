@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import config from './config';
 
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = config.MONGO_URL;
 
 console.log('[INFO] MONGODB URL:=>', MONGO_URL);
 
