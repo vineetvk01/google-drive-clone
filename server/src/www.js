@@ -1,4 +1,5 @@
 import app from './app';
+import config from './config';
 import http from 'http';
 
 /**
@@ -22,7 +23,7 @@ const normalizePort = (val) => {
   return false;
 };
 
-const port = normalizePort('4000');
+const port = normalizePort(config.PORT || '4000');
 
 const server = http.createServer(app);
 
