@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import _ from 'lodash';
 import { createUser, loginRequest } from '../services/users';
+import { config } from '../config';
 import { signJWTData, JWT_COOKIE_NAME, authRequired } from '../middleware/authentication';
 
 const COOKIE_AGE_ONE_DAY = 60 * 60 * 24 * 1000;
@@ -33,7 +34,7 @@ router.post('/login', async (req, res, next) => {
         maxAge: COOKIE_AGE_ONE_DAY,
         httpOnly: true,
         secure: false,
-        sameSite: 'lax'
+        sameSite: config.ENV === 'production' ? 'none': 'lax',
       }
     );
 
