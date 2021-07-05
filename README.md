@@ -5,15 +5,13 @@ The Drive app mimic the behavior of a standard file system. These files are not 
 ## Demo
 
 ### Register and Login
-![master](demo/demo1.gif)
+![main](demo/login.gif)
 ### Create File and Folder
-![master](demo/demo1.gif)
+![main](demo/create.gif)
 
-### Rename File
-![master](demo/login_vchat.gif)
+### Rename And Delete File
+![main](demo/edit.gif)
 
-### Delete
-![master](demo/signup_vchat.gif)
 
 
 ### sample .env 
