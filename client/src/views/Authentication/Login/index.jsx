@@ -57,6 +57,7 @@ const Login = () => {
       <div className={styles.loginBox}>
         <div className={styles.form}>
           <h5 className={styles.heading}>Member Login</h5>
+          <p className={styles.demoCred}>Use:  demo | demo</p>
           <p>Username</p>
           <input type="text" className={styles.username} onChange={(e) =>  setUsername(e.target.value)} />
           <p>Password</p>
