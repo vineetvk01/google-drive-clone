@@ -110,7 +110,6 @@ const DriveContainer = () => {
       directoryClone.pop();
     }
 
-    console.log(directoryClone);
     setDirectory(directoryClone);
   }
 
@@ -186,6 +185,16 @@ const DriveContainer = () => {
   }
 
   const handleCreate = async (filename, type, parentId) => {
+
+    const nameTaken = _.filter(allFiles, file => file.displayName.toLowerCase() === filename.toLowerCase());
+    if(nameTaken.length > 0){
+      addToast('Please change the name. FileName already taken', {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+      return;
+    }
+
     const response = await createFile(filename, type, parentId);
     if(response.data.success){
       addToast('Created Successfully', {
@@ -268,6 +277,8 @@ const DriveContainer = () => {
 
 export default React.memo(DriveContainer);
 
+
+// TODO: Separate into another file
 const Modal = ({visible = { show: false }, closeModal, parent, createFile, renameFile }) => {
   const { show, type, child } = visible;
   const [fileName, setFileName] = useState('');
@@ -325,6 +336,8 @@ const Modal = ({visible = { show: false }, closeModal, parent, createFile, renam
   )
 }
 
+
+// TODO: Separate into another file
 const ContextMenu = ({ context, closeContext, handleRename, handleDelete }) => {
   const { top, left, visible, child }  = context;
 
