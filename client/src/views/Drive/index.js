@@ -251,7 +251,7 @@ const DriveContainer = () => {
       </div>
       <Modal 
         visible={modalVisible}
-        closeModal={() => setModalVisible({ show: false  })}
+        closeModal={() => setModalVisible({...modalVisible, show: false  })}
         parent={currentParent}
         createFile={handleCreate}
         renameFile={handleRename}
