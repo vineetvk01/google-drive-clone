@@ -29,3 +29,7 @@ export const deleteFile = (parentId, childId) => {
     childId
   });
 }
+
+export const logoutUser = () => {
+  return apiRequest.post(`${URLS.POST_LOGOUT}`);
+}

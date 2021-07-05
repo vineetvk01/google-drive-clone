@@ -35,8 +35,6 @@ export const fetchAuthentication = (req, res, next) => {
         const data = jwt.verify(tokenValue, JWT_KEY);
         req.user = data;
       }
-    }else{
-      console.log('\n\n\n NO COOKIE ATTACHED')
     }
     next();
   } catch (error) {

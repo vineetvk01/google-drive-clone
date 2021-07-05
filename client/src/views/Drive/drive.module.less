@@ -58,36 +58,54 @@
       }
     }
 
-    .searchBox{
+  
+    .rightContainer {
       margin-left: auto;
-      display: flex;
-      align-items: center;
       min-width: 350px;
       max-width: 400px;
-      background: #fff;
-      border: 1px solid #dadada;
-      border-radius: 4px;
-      padding-left: 0.5rem;
-      overflow: hidden;
-      font-family: sans-serif;
+      display: flex;
 
-      & > .prefix {
-        font-weight: 300;
-        font-size: 14px;
-        color: #999;
-      }
-
-      & > input {
-        flex-grow: 1;
-        font-size: 14px;
+      .searchBox { 
+        min-width: 300px;
+        display: flex;
+        align-items: center;
         background: #fff;
-        border: none;
-        outline: none;
-        padding: 0.5rem;
+        border: 1px solid #dadada;
+        border-radius: 4px;
+        padding-left: 0.5rem;
+        overflow: hidden;
+        font-family: sans-serif;
+
+        & > .prefix {
+          font-weight: 300;
+          font-size: 14px;
+          color: #999;
+        }
+
+        & > input {
+          flex-grow: 1;
+          font-size: 14px;
+          background: #fff;
+          border: none;
+          outline: none;
+          padding: 0.5rem;
+        }
+
+        &:focus-within {
+          border-color: #777;
+        }
       }
 
-      &:focus-within {
-        border-color: #777;
+      .logout {
+        margin-left: auto;
+        min-width: 40px;
+        height: 20px;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: #f5523c;
+        font-weight: 700;
       }
     }
   }

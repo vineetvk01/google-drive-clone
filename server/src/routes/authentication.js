@@ -44,9 +44,13 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
-router.get('/session', authRequired(), async (req, res, next) => {
+router.get('/session', async (req, res, next) => {
   try {
     const { user } = req; 
+    if(!user){
+      res.publish(false, 'Not Logged In', {});
+      return;
+    }
     res.publish(true, 'User Information fetched', user);
   } catch (err) {
     console.error({ level: 'error', message: err.message || err.toString() });
@@ -54,7 +58,7 @@ router.get('/session', authRequired(), async (req, res, next) => {
   }
 });
 
-router.get('/logout', authRequired(), async (req, res, next) => {
+router.post('/logout', authRequired(), async (req, res, next) => {
   try {
     res.cookie(
       JWT_COOKIE_NAME,

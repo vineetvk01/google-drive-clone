@@ -4,12 +4,14 @@ import useOutside from "../../customHooks/clickOutside";
 import { IoArrowBackCircle } from 'react-icons/io5';
 import { IoIosClose } from 'react-icons/io';
 import { useToasts } from 'react-toast-notifications';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch, AiOutlineLogout } from 'react-icons/ai';
+import { fetchSession } from '../../store/session/actions';
 import folderImage from '../../assets/folder.png';
 import fileImage from '../../assets/file.png';
 import addNewButton from '../../assets/add_new_button.png';
 import styles from './drive.module.less';
-import { fetchFiles, createFile, deleteFile, renameFile, searchFiles } from './requests';
+import { fetchFiles, createFile, deleteFile, renameFile, searchFiles, logoutUser } from './requests';
+import { useDispatch } from 'react-redux';
 
 const nameTrimmer = (value, length = 11) => {
   return _.truncate(
@@ -22,6 +24,7 @@ const nameTrimmer = (value, length = 11) => {
 
 const DriveContainer = () => {
   const [modalVisible, setModalVisible] = useState({ show: false });
+  const dispatch = useDispatch();
   const [contextVisible, setContextVisible] = useState({visible: false});
   const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(true);
@@ -221,6 +224,11 @@ const DriveContainer = () => {
     )
   }
 
+  const handleLogout = async () => {
+    await logoutUser();
+    dispatch(fetchSession());
+  }
+
   return (
     <div className={styles.driveContainer}>
       <div className={styles.navigation}>
@@ -230,10 +238,14 @@ const DriveContainer = () => {
         <div className={styles.breadcrumbs}>
           {isSearchActive ? renderSearchDetails() : renderDirectory()}
         </div>
-        <div className={styles.searchBox}>
-          <span className={styles.prefix}><AiOutlineSearch /></span>
-          <input placeholder="Search files and folders" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+        <div className={styles.rightContainer}>
+          <div className={styles.searchBox}>
+            <span className={styles.prefix}><AiOutlineSearch /></span>
+            <input placeholder="Search files and folders" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+          </div>
+          <AiOutlineLogout className={styles.logout} title="Logout" onClick={handleLogout} />
         </div>
+        
       </div>
       <div className={styles.filesAndFolder}>
         {loading ? renderLoader() : renderFilesAndFolder()}

@@ -13,7 +13,7 @@ const routes = {
   drive: {
     path: "/drive",
     component: DriveView,
-    roles: [],
+    roles: ['user'],
     exact: false,
   },
 };

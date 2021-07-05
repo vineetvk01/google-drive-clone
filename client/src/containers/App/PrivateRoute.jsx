@@ -18,6 +18,8 @@ const PrivateRoute = ({ children, ...props }) => {
     return <Fallback active />;
   }
 
+  console.log(session);
+
   if (isEmpty(session.user)) {
     return <Redirect to="/auth/login" />;
   }
